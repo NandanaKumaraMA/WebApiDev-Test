@@ -1,0 +1,24 @@
+{
+  "name": "webapidev-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NandanaKumaraMA/WebApiDev-Test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/NandanaKumaraMA/WebApiDev-Test/issues"
+  },
+  "homepage": "https://github.com/NandanaKumaraMA/WebApiDev-Test#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
