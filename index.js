@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const {seedData} = require('./db')
 
+
 // Express simplifies routing by binding a path directly to an HTTP Method
 app.get('/', (req, res) => {
   // Express automatically handles the standard 200 OK Status Code 
