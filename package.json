@@ -5,21 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NandanaKumaraMA/WebApiDev-Test.git"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/NandanaKumaraMA/WebApiDev-Test/issues"
+  "author": "Gimna Katugampala",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   },
-  "homepage": "https://github.com/NandanaKumaraMA/WebApiDev-Test#readme",
   "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   }
 }

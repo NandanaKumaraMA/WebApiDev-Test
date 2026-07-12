@@ -1,62 +1,35 @@
 const express = require('express');
 const app = express();
-const port = 3000;
-const {seedData} = require('./db')
+const ProvincesRouter = require('./router/provinces')
+const DistrictRouter = require('./router/districts')
+const StationsRouter = require('./router/stations')
+const VehicleRouter = require('./router/vehicles')
+const PingsRouter = require('./router/pings')
 
+const port = process.env.PORT || 5000;
 
-// Express simplifies routing by binding a path directly to an HTTP Method
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
+
 app.get('/', (req, res) => {
-  // Express automatically handles the standard 200 OK Status Code 
-  // and formats the response Content-Type headers for you
-  res.send('Hello World!');
+  res.json({
+    status: 'OK',
+    session : 'NB6007CEMS2'
+  });
 });
 
-app.get('/provinves', (req, res) => {
-  // Express automatically handles the standard 200 OK Status Code 
-  // and formats the response Content-Type headers for you
-  res.json(seedData.provinces);
-});
 
-app.get('/provinves/:provice-id', (req, res) => {
-  // Express automatically handles the standard 200 OK Status Code 
-  // and formats the response Content-Type headers for you
-  res.send('provinces');
-});
-app.get('/districts', (req, res) => {
-  // Express automatically handles the standard 200 OK Status Code 
-  // and formats the response Content-Type headers for you
-  res.send('districts');
-});
+app.use('/v1/api/provinces',ProvincesRouter)
+app.use('/v1/api/districts',DistrictRouter)
+app.use('/v1/api/stations',StationsRouter)
+app.use('/v1/api/vehicles',VehicleRouter)
+app.use('/v1/api/pings',PingsRouter)
 
-// app.get('/districts/:discrict-id', (req, res) => {
-//   // Express automatically handles the standard 200 OK Status Code 
-//   // and formats the response Content-Type headers for you
-//   res.send('districts/:discrict-id');
-// });
-// app.get('/station', (req, res) => {
-//   // Express automatically handles the standard 200 OK Status Code 
-//   // and formats the response Content-Type headers for you
-//   res.send('station');
-// });
 
-// app.get('/station:/station-id', (req, res) => {
-//   // Express automatically handles the standard 200 OK Status Code 
-//   // and formats the response Content-Type headers for you
-//   res.send('station:/station-id');
-// });
-// app.get('/vehicle', (req, res) => {
-//   // Express automatically handles the standard 200 OK Status Code 
-//   // and formats the response Content-Type headers for you
-//   res.send('vehicle');
-// });
 
-// app.get('/vehicle:/vehicle-id', (req, res) => {
-//   // Express automatically handles the standard 200 OK Status Code 
-//   // and formats the response Content-Type headers for you
-//   res.send('vehicle:/vehicle-id');
-// });
+
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running at ${port} `);
+  console.log(`Server running at ${port}`);
 });
