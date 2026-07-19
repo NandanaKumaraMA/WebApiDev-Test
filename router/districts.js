@@ -1,8 +1,5 @@
-
 const express = require('express');
-const {seedData} = require('../db')
-
-
+const { getDB } = require('../db');
 
 const router = express.Router();
 
@@ -11,21 +8,33 @@ const router = express.Router();
 // ---------------------------------------------------------
 
 // GET /districts (Collection)
-router.get('/', (req, res) => {
-    res.status(200).json(seedData.districts);
-});
-
-// GET /districts/:district-id (Atomic member)
-router.get('/:districtId', (req, res) => {
-    const id = req.params.districtId;
-    const district = seedData.districts.find(d => d.id == id);
-    
-    if (district) {
-        res.status(200).json(district);
-    } else {
-        res.status(404).json({ error: "District not found" });
+router.get('/', async (req, res) => {
+    try {
+        const db = getDB();
+        const districts = await db.collection('districts').find({}).toArray();
+        res.status(200).json(districts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
+// GET /districts/:district-id (Atomic member)
+router.get('/:districtId', async (req, res) => {
+    try {
+        const db = getDB();
+        const id = Number(req.params.districtId);
+        const district = await db.collection('districts').findOne({ id });
 
-module.exports = router
+        if (district) {
+            res.status(200).json(district);
+        } else {
+            res.status(404).json({ error: "District not found" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+module.exports = router;

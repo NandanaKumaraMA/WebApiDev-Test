@@ -1,27 +1,43 @@
-
-const express = require('express');
-
+// db.js
+const { MongoClient } = require('mongodb');
 const fs = require('fs');
-const path = require('path');
-
-// Load seed data (Mocking the seed.json mentioned in the slide)
-// In a real scenario, ensure seed.json exists in the same directory or update the path.
-let seedData = {
-    provinces: [],
-    districts: [],
-    stations: [],
-    vehicles: [],
-    pings: [] 
-};
+const dns = require('dns');
 
 
-try {
-    const DATA_PATH = path.join(__dirname, '.', 'seed.json');
+// Set Google DNS servers for this script's lookups
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-    seedData = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
+// const uri = 'mongodb+srv://nandanakumarama_db_user:GYXFk9R2JYin18sQ@cluster0.wq9pala.mongodb.net/?appName=Cluster0';
 
-} catch (error) {
-    console.warn("Could not load seed.json. Running with empty arrays.");
+if (!uri) {
+    throw new Error('Missing MONGODB_URI environment variable. Set it in your .env file.');
 }
 
-module.exports = {seedData}
+const client = new MongoClient(uri);
+
+let db = null;
+
+// Connect once at startup. index.js calls this before app.listen().
+async function connectDB() {
+    if (db) return db;
+
+    await client.connect();
+    db = client.db('mydb'); // same db name used in seed.js
+    console.log('Connected to MongoDB');
+    return db;
+}
+
+// Used inside route handlers, after connectDB() has already resolved.
+function getDB() {
+    if (!db) {
+        throw new Error('Database not initialized — call connectDB() before using getDB().');
+    }
+    return db;
+}
+
+async function closeDB() {
+    await client.close();
+    db = null;
+}
+
+module.exports = { connectDB, getDB, closeDB };
