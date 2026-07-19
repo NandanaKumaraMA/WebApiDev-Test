@@ -7,7 +7,7 @@ const dns = require('dns');
 // Set Google DNS servers for this script's lookups
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-// const uri = 'mongodb+srv://nandanakumarama_db_user:GYXFk9R2JYin18sQ@cluster0.wq9pala.mongodb.net/?appName=Cluster0';
+const uri = 'mongodb+srv://nandanakumarama_db_user:GYXFk9R2JYin18sQ@cluster0.wq9pala.mongodb.net/?appName=Cluster0';
 
 if (!uri) {
     throw new Error('Missing MONGODB_URI environment variable. Set it in your .env file.');
